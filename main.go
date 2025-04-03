@@ -1,22 +1,43 @@
+// Copyright (c) HashiCorp, Inc.
+// SPDX-License-Identifier: MPL-2.0
+
 package main
 
 import (
-        "context"
-        "fmt"
-        "os"
-        openapi "github.com/noamgloberman0/Open-WebUI-Provider/openwebui-go-client" //replace your-project-name
+	"context"
+	"flag"
+	"log"
+	"terraform-provider-openwebui/internal/provider"
+
+	"github.com/hashicorp/terraform-plugin-framework/providerserver"
+)
+
+var (
+	// these will be set by the goreleaser configuration
+	// to appropriate values for the compiled binary.
+	version string = "dev"
+
+	// goreleaser can pass other information to the main package, such as the specific commit
+	// https://goreleaser.com/cookbooks/using-main.version/
 )
 
 func main() {
-        cfg := openapi.NewConfiguration()
-        cfg.AddDefaultHeader("Authorization", "Bearer f466e11c74554ff1adf1d2d36c5b5fd5") //example Auth header.
-        client := openapi.NewAPIClient(cfg)
+	var debug bool
 
-        // Example: Call an API endpoint (replace with your actual endpoint)
-        result, _, err := client.AudioAPI.GetModelsApiV1AudioModelsGet(context.Background()).Execute()
-        if err != nil {
-                fmt.Println("Error:", err)
-                return
-        }
-        fmt.Println("Result:", result)
+	flag.BoolVar(&debug, "debug", false, "set to true to run the provider with support for debuggers like delve")
+	flag.Parse()
+
+	opts := providerserver.ServeOpts{
+		// TODO: Update this string with the published name of your provider.
+		// Also update the tfplugindocs generate command to either remove the
+		// -provider-name flag or set its value to the updated provider name.
+		Address: "hashicorp.com/edu/openwebui",
+		Debug:   debug,
+	}
+
+	err := providerserver.Serve(context.Background(), provider.New(version), opts)
+
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 }
