@@ -26,7 +26,7 @@ locals {
         },
         "imported" = {
             name = "imported"
-            description = "test"
+            description = "changed description"
             permissions = {
                 workspace = {
                     models     = true

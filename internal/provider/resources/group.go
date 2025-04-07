@@ -18,7 +18,7 @@ var (
 	_ resource.ResourceWithImportState = &Group{}
 )
 
-func NewGroup() resource.Resource {
+func GroupResource() resource.Resource {
 	return &Group{}
 }
 

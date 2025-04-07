@@ -119,6 +119,6 @@ func (p *openwebuiProvider) DataSources(_ context.Context) []func() datasource.D
 // Resources defines the resources implemented in the provider.
 func (p *openwebuiProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
-		resources.NewGroup,
+		resources.GroupResource,
 	}
 }
