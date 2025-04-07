@@ -36,4 +36,38 @@ func main() {
 		return
 	}
 	fmt.Println("result:", result[0].Name)
+
+	// Ensure CreateNewModelRequest is correctly defined in the openapi package
+	meta := openapi.ModelMeta{
+		Description: &openapi.Description{String: func() *string { s := "A test model created via Go client"; return &s }()},
+	}
+
+	// Example Params (replace with actual parameters your model needs)
+	params := map[string]interface{}{
+		"context_length": 2048,
+	}
+
+	// Example Access Control (optional)
+	accessControl := map[string]interface{}{
+		"public": true,
+	}
+
+	// Create the ModelForm
+	modelForm := openapi.ModelForm{
+		Id:            "my-unique-model-id",
+		Name:          "My Go Created Model",
+		Meta:          meta,
+		Params:        params,
+		AccessControl: accessControl,
+	}
+
+	modelModel, _, err := client.ModelsAPI.CreateNewModelApiV1ModelsCreatePost(context.Background()).ModelForm(modelForm).Execute()
+
+	if modelModel != nil {
+		fmt.Println("Model Created: ", modelModel)
+	} else {
+		fmt.Println("Model Creation Failed")
+	}
+	// fmt.Print("Model Created: ", modelModel, resp)
+	fmt.Println("Error:", err.Error())
 }

@@ -2,6 +2,7 @@ package provider
 
 import (
 	"context"
+	"terraform-provider-openwebui/internal/provider/resources"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -112,12 +113,12 @@ func (p *openwebuiProvider) Configure(ctx context.Context, req provider.Configur
 
 // DataSources defines the data sources implemented in the provider.
 func (p *openwebuiProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{
-		NewUsersDataSource,
-	}
+	return []func() datasource.DataSource{}
 }
 
 // Resources defines the resources implemented in the provider.
 func (p *openwebuiProvider) Resources(_ context.Context) []func() resource.Resource {
-	return nil
+	return []func() resource.Resource{
+		resources.NewGroup,
+	}
 }
