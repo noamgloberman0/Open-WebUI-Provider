@@ -7,7 +7,7 @@ import (
 	"context"
 	"flag"
 	"log"
-	"terraform-provider-openwebui/internal/provider"
+	provider "terraform-provider-openwebui/internal"
 
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
 )

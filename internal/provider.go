@@ -1,8 +1,8 @@
-package provider
+package internal
 
 import (
 	"context"
-	"terraform-provider-openwebui/internal/provider/resources"
+	"terraform-provider-openwebui/internal/resources"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/path"
